@@ -1,0 +1,28 @@
+#!/bin/bash
+
+FSTAB="/etc/fstab"
+
+if [ -z "$1" ]; then
+    echo "Usage: $0 <mount point>"
+    exit 1
+fi
+
+TARGET="${1%/}"
+
+while read -r device mount fstype options dump pass; do
+    [[ -z "$device" || "$device" =~ ^# ]] && continue
+
+    mount_clean="${mount%/}"
+
+    if [ "$mount_clean" = "$TARGET" ]; then
+        echo "Device: $device"
+        echo "Filesystem type: $fstype"
+        echo "Mount options: $options"
+        echo "Dump freqency: $dump"
+        echo "Fsck pass number: $pass"
+        exit 0
+    fi
+done < "$FSTAB"
+
+echo "No mount point '$TARGET' found in $FSTAB"
+exit 2
