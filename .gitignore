@@ -1,0 +1,61 @@
+# Prerequisites
+*.d
+
+# Compiled Object files
+*.slo
+*.lo
+*.o
+*.obj
+
+# Precompiled Headers
+*.gch
+*.pch
+
+# Compiled Dynamic libraries
+*.so
+*.dylib
+*.dll
+
+# Fortran module files
+*.mod
+*.smod
+
+# Compiled Static libraries
+*.lai
+*.la
+*.a
+*.lib
+
+# Executables
+*.exe
+*.out
+*.app
+
+# Build directories
+build/
+out/
+cmake-build/
+
+# User specific settings
+CMakeLists.txt.user
+CMakeUserPresets.json
+
+# IDE files //-> Tu za pewne będzie trzeba dodać rzeczy związane z waszymi IDE
+.vs/
+.idea/
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.swp
+*~
+_ReSharper*
+*.log
+
+# Macos
+.DS_Store
+\.DS_Store
+
+# Bash scripts
+*.sh
