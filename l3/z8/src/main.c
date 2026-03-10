@@ -6,25 +6,43 @@
 #include <sys/types.h>
 #include <sys/wait.h>
 
-#define BUFFER_SIZE 64
+#define BUFFER_SIZE 64ull
 #define TOKEN_DELIMITER " \t\r\n\a"
 
 char* read_line(void) {
-	char* line = NULL;
-	size_t bufsize = 0;
+	size_t bufsize = BUFFER_SIZE;
+	size_t position = 0;
+	char* buffer = malloc(sizeof(char) * bufsize);
+	int c;
 
-	if(getline(&line, &bufsize, stdin) == -1) {
-		if(feof(stdin)) exit(EXIT_SUCCESS);
-		perror("readline");
+	if(!buffer) {
+		fprintf(stderr, "malloc error in read_line\n");
 		exit(EXIT_FAILURE);
 	}
 
-	return line;
+	while(1) {
+		c = getchar();
+		if(c == EOF || c == '\n') {
+			buffer[position] = '\0';
+			return buffer;
+		}
+		buffer[position] = (char)c;
+		position++;
+
+		if(position == bufsize) {
+			bufsize += BUFFER_SIZE;
+			buffer = realloc(buffer, sizeof(char) * bufsize);
+			if(!buffer) {
+				fprintf(stderr, "realloc error in read_line\n");
+				exit(EXIT_FAILURE);
+			}
+		}
+	}
 }
 
 char** split_line(char* line) {
-	int bufsize = BUFFER_SIZE;
-	int position = 0;
+	size_t bufsize = BUFFER_SIZE;
+	size_t position = 0;
 	char** tokens = malloc(sizeof(char*) * bufsize);
 	char* token;
 
@@ -52,7 +70,7 @@ char** split_line(char* line) {
 }
 
 int launch(char** args) {
-	pid_t pid, wpid;
+	pid_t pid;
 	int status;
 
 	pid = fork();
@@ -64,7 +82,7 @@ int launch(char** args) {
 		perror("fork");
 	} else {
 		do {
-			wpid = waitpid(pid, &status, WUNTRACED);
+			waitpid(pid, &status, WUNTRACED);
 		} while(!WIFEXITED(status) && !WIFSIGNALED(status));
 	}
 
@@ -74,7 +92,7 @@ int launch(char** args) {
 int execute(char** args) {
 	if(args[0] == NULL) return 1;
 
-	for(int i = 0; i < builtin_func_count(); i++)
+	for(size_t i = 0; i < builtin_func_count(); i++)
 		if(strcmp(args[0], builtin_str[i]) == 0)
 			return builtin_func[i](args);
 
@@ -97,6 +115,6 @@ void loop(void) {
 	} while(status);
 }
 
-int main(int argc, char** argv) {
+int main() {
 	loop();
 }

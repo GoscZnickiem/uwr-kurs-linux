@@ -7,7 +7,7 @@
 #include <limits.h>
 #include <unistd.h>
 
-int builtin_cd(char **args) {
+int builtin_cd(char** args) {
 	if(args[1] == NULL) {
 		fprintf(stderr, "expected argument to \"cd\"\n");
 	} else {
@@ -17,7 +17,7 @@ int builtin_cd(char **args) {
 	return 1;
 }
 
-int builtin_pwd(char **args) {
+int builtin_pwd(char** _) {
     char cwd[PATH_MAX];
 
     if (getcwd(cwd, sizeof(cwd)) == NULL) {
@@ -29,13 +29,12 @@ int builtin_pwd(char **args) {
     return 1;
 }
 
-int builtin_help(char **args) {
-	int i;
+int builtin_help(char** _) {
 	printf("MF who deadass need help with shell usage (skull emoji)\n");
 	printf("Type program names and arguments, and hit enter.\n");
 	printf("The following are built in:\n");
 
-	for (i = 0; i < builtin_func_count(); i++) {
+	for (size_t i = 0; i < builtin_func_count(); i++) {
 		printf("\t%s\n", builtin_str[i]);
 	}
 
@@ -43,7 +42,7 @@ int builtin_help(char **args) {
 	return 1;
 }
 
-int builtin_exit(char **args) {
+int builtin_exit(char** _) {
 	return 0;
 }
 
