@@ -11,11 +11,11 @@
 UNAMES := $(shell uname -o)
 ifeq      (${UNAMES},GNU/Linux)
 	COMPILER_FLAGS =
-	LINKFLAGS = -lGL -lglfw -lGLEW -ldl
+	LINKFLAGS = -lc
 	EXE =
 else ifeq (${UNAMES},Msys)
 	COMPILER_FLAGS = -I /msys64/mingw64/include/
-	LINKFLAGS = -L /msys64/mingw64/lib/ -lopengl32 -lglfw3 -lglew32
+	LINKFLAGS = -lc
 	EXE = .exe
 	COMPILER_FLAGS += -DARCH_MSYS=${UNAMES}
 else
@@ -29,7 +29,7 @@ endif
 # ==== PROJECT CONFIGURATION =======================
 # ==================================================
 APP_NAME = my_shell
-COMPILER = clang
+COMPILER = gcc
 
 COMPILER_FLAGS += -std=c23 -Wall -Wextra -Wpedantic -Wshadow -Wunused -Wconversion -Wsign-conversion -Wnull-dereference -Wdouble-promotion -Wformat=2 -Wimplicit-fallthrough -Wmisleading-indentation
 # COMPILER_FLAGS += -Werror	# possibly not helpful

@@ -19,6 +19,7 @@ char* read_line(void) {
 		fprintf(stderr, "malloc error in read_line\n");
 		exit(EXIT_FAILURE);
 	}
+	getline(NULL, NULL, NULL);
 
 	while(1) {
 		c = getchar();

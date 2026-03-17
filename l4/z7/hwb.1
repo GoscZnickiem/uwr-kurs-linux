@@ -1,0 +1,134 @@
+.TH HWB 1 "March 2026" "hwb 1.0" "User Commands"
+
+.SH NAME
+hwb \- print greeting messages
+
+.SH SYNOPSIS
+.B hwb
+.RI [ OPTIONS "] [" NAME "]..."
+
+.SH DESCRIPTION
+.B hwb
+prints greeting messages for each specified
+.IR NAME .
+
+.P
+If no
+.I NAME
+is given,
+or if the
+.B \-\-world
+option is specified,
+a greeting for
+.I world
+is printed.
+
+.P
+The default greeting is
+.BR Hello ,
+but it can be changed using the
+.BR \-g " or " \-\-greeting
+option.
+
+.P
+Depending on the options,
+names and the greeting may be capitalized,
+and names may be colorized.
+
+.SH OPTIONS
+.TP
+.BR \-c ", " \-\-capitalize
+Capitalize the first letter of the greeting
+and each
+.IR NAME .
+
+.TP
+.BR \-\-color =\fIWHEN\fR
+Control whether names are colorized.
+.I WHEN
+is one of:
+.RS
+.TP
+.B never
+Never use color.
+.TP
+.B auto
+Use color only when standard output is a terminal.
+.TP
+.B always
+Always use color.
+.RE
+
+.TP
+.BR \-g " " \fITEXT\fR ", " \-\-greeting =\fITEXT\fR
+Use
+.I TEXT
+instead of the default greeting
+.RB ( Hello ).
+
+.TP
+.BR \-w ", " \-\-world
+Also print a greeting for
+.B world ,
+even if names are provided.
+
+.TP
+.BR \-h ", " \-\-help
+Display a help message and exit.
+
+.TP
+.BR \-v ", " \-\-version
+Display version information and exit.
+
+.SH EXIT STATUS
+.TP
+.B 0
+Successful execution.
+
+.TP
+.B 1
+Invalid arguments or internal error.
+
+.SH EXAMPLES
+.P
+Print greetings for two names:
+
+.P
+.in +4n
+.EX
+$ \fBhwb Alice Bob\fP
+Hello, Alice !
+Hello, Bob !
+.EE
+.in
+
+.P
+Use a custom greeting and capitalization:
+
+.P
+.in +4n
+.EX
+$ \fBhwb -c -g Hi alice\fP
+Hi, Alice !
+.EE
+.in
+
+.P
+Force colored output:
+
+.P
+.in +4n
+.EX
+$ \fBhwb --color=always John\fP
+Hello, John !
+.EE
+.in
+
+.SH AUTHORS
+Written by Dziekan.
+
+.SH SEE ALSO
+.BR printf (1),
+.BR echo (1),
+.BR getopt (1),
+.BR bash (1)
