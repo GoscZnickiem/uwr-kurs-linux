@@ -1,0 +1,37 @@
+Obra programy służa do zarządzania tablicami partycji na dysku.
+Obsługują zarówno tablice partycji MBR jak i GPT.
+
+fdisk
+
+- lekki
+- szybki
+- pozwala tworzyć, usuwać i modyfikować partycje
+
+GNU parted
+
+- bardziej rozbudowany
+- pozwala zmienić rozmiar partycji
+- ma tryb interaktywny oraz tryb skryptowy
+
+
+
+Polecenia do zadania:
+
+truncate -s $((512 * 976580000)) disk.img
+
+sudo losetup -fP disk.img
+losetup -a
+sudo losetup -d /dev/loopX
+
+sudo parted /dev/loopX
+sudo (c)fdisk /dev/loopX
+
+
+
+Polecenia do pareted:
+
+mklabel msdos										- utworzenie MBR-a
+unit s												- wyświetlaj wielkości w liczbie sektorów
+mkpart primary/extended [fat32/ext4/linux-swap]		- utwórz partycję
+set 1 lba on										- ustaw flagę LBA partycji 1 na ON
+rm 3												- usuń partycję 3

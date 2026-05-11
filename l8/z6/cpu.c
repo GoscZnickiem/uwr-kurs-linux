@@ -18,7 +18,8 @@ int read_cpu(cpu_ticks_t *t) {
 
 	unsigned long long user, nice, system, idle, iowait, irq, softirq, steal;
 	int n = sscanf(line, "%7s %llu %llu %llu %llu %llu %llu %llu %llu",
-			tag, &t->user, &t->nice, &t->system, &t->idle, &t->iowait, &t->irq, &t->softirq, &t->steal);
+			tag, &t->user, &t->nice, &t->system, &t->idle, &t->iowait, &t->irq,
+			&t->softirq, &t->steal);
 
 	if (n != 9 || strcmp(tag, "cpu") != 0) return -1;
 
